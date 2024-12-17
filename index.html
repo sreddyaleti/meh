@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script> <!-- Add confetti script -->
+  <style>
+    /* Global Styles */
+    body {
+      background-color: #e0e5ec;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      transition: background-image 1s ease;
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+      font-size: 24px;
+    }
+
+    /* Form Container */
+    div {
+      background-color: #e0e5ec;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 8px 8px 15px #c1c8d1, -8px -8px 15px #ffffff;
+      width: 100%;
+      max-width: 350px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Input and Select Fields */
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: none;
+      border-radius: 12px;
+      background: #e0e5ec;
+      box-shadow: 9px 9px 16px #c1c8d1, -9px -9px 16px #ffffff;
+      font-size: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type=text]:hover, select:hover {
+      transform: scale(1.05);
+      box-shadow: 5px 5px 10px #c1c8d1, -5px -5px 10px #ffffff;
+    }
+
+    /* Submit Button */
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #e0e5ec;
+      box-shadow: 9px 9px 16px #c1c8d1, -9px -9px 16px #ffffff;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      transform-origin: center;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+      transform: translateX(10px);
+      box-shadow: 5px 5px 10px #c1c8d1, -5px -5px 10px #ffffff;
+    }
+
+    /* 3D Animation on Input */
+    input[type=text]:focus {
+      animation: input3D 0.4s ease-in-out;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px 5px rgba(0, 255, 255, 0.8);
+    }
+
+    @keyframes input3D {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.1);
+      }
+    }
+
+    /* Dance Animation for Name & Joke */
+    @keyframes dance {
+      0% {
+        transform: translateY(0);
+      }
+      25% {
+        transform: translateY(-10px);
+      }
+      50% {
+        transform: translateY(0);
+      }
+      75% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    #nameDisplay, #jokeDisplay {
+      font-size: 20px;
+      color: #333;
+      margin-top: 10px;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    #nameDisplay.dance, #jokeDisplay.dance {
+      animation: dance 2s ease-in-out forwards; /* Dance animation for 2 seconds */
+    }
+
+    /* Fade In Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h3 {
+        font-size: 20px;
+      }
+
+      div {
+        padding: 20px;
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h3 {
+        font-size: 18px;
+      }
+
+      div {
+        padding: 15px;
+        width: 100%;
+      }
+
+      input[type=text], select, input[type=submit] {
+        padding: 10px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Form -->
+<div>
+  <form id="userForm">
+    <!-- Name Field -->
+    <label for="name">Enter your name</label>
+    <input type="text" id="name" name="name" placeholder="Your name..">
+    
+    <!-- Greeting -->
+    <div id="nameDisplay"></div>
+
+    <!-- Joke -->
+    <div id="jokeDisplay"></div>
+
+    <!-- Favorite Movie -->
+    <label for="movie">What is your favorite movie?</label>
+    <input type="text" id="movie" name="favorite_movie" placeholder="Your favorite movie..">
+
+    <!-- Favorite Song -->
+    <label for="song">What is your favorite song?</label>
+    <input type="text" id="song" name="favorite_song" placeholder="Song name..">
+
+    <!-- Favorite Color -->
+    <label for="color">What is your favorite color?</label>
+    <input type="text" id="color" name="favorite_color" placeholder="Your favorite color..">
+
+    <!-- Submit Button -->
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<script>
+  // Array of jokes
+  const jokes = [
+    "Why don't skeletons fight each other? They don't have the guts.",
+    "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+    "Why don’t some couples go to the gym? Because some relationships don’t work out.",
+    "I couldn’t figure out how to put my seatbelt on. Then it clicked.",
+    "Why was the math book sad? Because it had too many problems.",
+    "I'm reading a book about anti-gravity. It's impossible to put down!",
+    "I used to play piano by ear, but now I use my hands."
+  ];
+
+  // Handle form submission
+  document.querySelector("#userForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form from automatically submitting
+
+    var userName = document.getElementById("name").value;
+    var favoriteMovie = document.getElementById("movie").value;
+    var favoriteSong = document.getElementById("song").value;
+    var favoriteColor = document.getElementById("color").value;
+
+    // Show greeting with the entered name
+    var nameDisplay = document.getElementById("nameDisplay");
+    nameDisplay.textContent = `Hey ${userName}, :`;
+    nameDisplay.style.display = "block";
+    nameDisplay.classList.add('dance'); // Apply dance animation
+
+    // Submit data to SheetDB API
+    var data = {
+      name: userName,
+      favorite_movie: favoriteMovie,
+      favorite_song: favoriteSong,
+      favorite_color: favoriteColor
+    };
+
+    fetch('https://sheetdb.io/api/v1/veno83fvy1hgz', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Data successfully submitted:", data); // Log response
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+    // Display a joke after 1 second
+    setTimeout(function() {
+      var randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+      var jokeDisplay = document.getElementById("jokeDisplay");
+      jokeDisplay.textContent = randomJoke;
+      jokeDisplay.style.display = "block";
+      jokeDisplay.classList.add('dance'); // Apply dance animation
+
+      // Hide Name and Joke after 5 seconds
+      setTimeout(function() {
+        nameDisplay.style.display = "none";
+        jokeDisplay.style.display = "none";
+      }, 5000);
+
+      // Trigger confetti after data is submitted
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { x: 0.5, y: 0.5 },
+        colors: ['#ff0', '#0f0', '#00f', '#f00', '#ff00ff']
+      });
+    }, 1000); // Delay the joke by 1 second
+  });
+
+  // Change background color based on the input field
+  document.getElementById("color").addEventListener("input", function() {
+    var color = document.getElementById("color").value;
+    document.body.style.backgroundColor = color;
+  });
+</script>
+
+</body>
+</html>
